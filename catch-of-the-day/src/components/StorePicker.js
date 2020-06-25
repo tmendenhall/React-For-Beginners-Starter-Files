@@ -5,11 +5,12 @@ class StorePicker extends React.Component {
 
     myInput = React.createRef();
 
-    goToStore = event => { // creates a function in the context of the StorePicker component to access 'this'
+    goToStore = (event) => { // creates a function in the context of the StorePicker component to access 'this'
         event.preventDefault(); // stop form from submitting
         // get text input
-        console.log(this.myInput.current.value);
+        const storeName = this.myInput.current.value;
         // change the route
+        this.props.history.push(`/store/${storeName}`)
     }
 
     render() {
