@@ -4,12 +4,28 @@ import Order from './Order'
 import Inventory from './Inventory'
 import sampleFishes from '../sample-fishes'
 import Fish from "./Fish";
+import base from "../base"
 
 class App extends React.Component {
     state = {
       fishes: {},
       order: {}
     };
+    componentDidMount() {
+        // very first possible second app is on the page
+        console.log("mounted");
+        const { params } = this.props.match;
+        this.ref = base.syncState(`${params.storeId}/fishes`,{
+            context: this,
+            state: 'fishes'
+        })
+    }
+
+    componentWillUnmount() {
+        console.log("unmounted")
+        base.removeBinding(this.ref)
+    }
+
     addFish = fish => {
         // 1. copy the existing state
         const fishes = {...this.state.fishes}; // object spread to copy an object
@@ -45,7 +61,7 @@ class App extends React.Component {
                               addToOrder = {this.addToOrder}/>)}
                   </ul>
               </div>
-              <Order/>
+              <Order fishes = {this.state.fishes} order={this.state.order}/>
               <Inventory addFish = {this.addFish} loadSampleFishes = {this.loadSampleFishes}/>
           </div>
         );
