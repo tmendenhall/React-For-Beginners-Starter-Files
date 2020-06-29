@@ -11,19 +11,36 @@ class App extends React.Component {
       fishes: {},
       order: {}
     };
+
     componentDidMount() {
         // very first possible second app is on the page
         console.log("mounted");
         const { params } = this.props.match;
+        // reinstate from local storage
+        const localStorageRef = localStorage.getItem(params.storeId);
+        if (localStorageRef){
+            this.setState({order: JSON.parse(localStorageRef)});
+        }
+        //this.state.order = localStorageRef;
         this.ref = base.syncState(`${params.storeId}/fishes`,{
             context: this,
             state: 'fishes'
         })
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log("updated!");
+        const storeId = this.getStoreId();
+        localStorage.setItem(storeId, JSON.stringify(this.state.order));
+    }
+
     componentWillUnmount() {
         console.log("unmounted")
         base.removeBinding(this.ref)
+    }
+
+    getStoreId = () => {
+        return this.props.match.params.storeId;
     }
 
     addFish = fish => {
