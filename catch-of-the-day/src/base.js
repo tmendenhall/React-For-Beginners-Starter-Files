@@ -2,7 +2,7 @@ import Rebase from 're-base';
 import firebase from 'firebase';
 
 const firebaseConfig = {
-    apiKey: "",
+    apiKey: "AIzaSyDZq8N72zcCraBZrANmYXL54AdSUnCMeFI",
     authDomain: "catch-of-the-day-tm1.firebaseapp.com",
     databaseURL: "https://catch-of-the-day-tm1.firebaseio.com",
     projectId: "catch-of-the-day-tm1",
